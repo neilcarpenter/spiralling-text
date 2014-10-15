@@ -2,12 +2,15 @@
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
-    <title>Archimedean Spiral</title>
-    <script type="text/javascript" src="http://d3js.org/d3.v3.js"></script>
+    <title>Spiral those</title>
     <style>
       body {
-        font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', 'Verdana', sans-serif;
-        margin: 40px;
+        /*font-family: "sketchnote-square",sans-serif;*/
+        font-family: "kepler-std-display",serif;
+        margin: 0;
+      }
+      svg {
+        padding: 30px;
       }
       .axis path {
         fill: none;
@@ -19,7 +22,7 @@
         stroke: #222;
       }
       text.title {
-        font-size: 24px;
+        /*font-size: 24px;*/
       }
       circle.tick { 
         fill: #f3f3f3;
@@ -29,12 +32,17 @@
       path.spiral {
         fill: none;
         stroke: #ee8d18;
-        stroke-width: 3px;
+        /*stroke-width: 3px;*/
+        stroke-width: 0;
       }
     </style>
+    <script src="//use.typekit.net/rte7stv.js"></script>
   </head>
   <body>
     <div id="chart"></div>
-    <script type="text/javascript" src="main.js"></script>
+    <script src="d3.v3.js"></script>
+    <script src="underscore.js"></script>
+    <script src="data.js"></script>
+    <script src="main.js"></script>
   </body>
 </html>
