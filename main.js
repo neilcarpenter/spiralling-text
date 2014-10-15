@@ -1,7 +1,5 @@
 function init() {
 
-  // a spiral for john hunter, creator of matplotlib
-
   var width = 700,
       height = 700,
       num_axes = 8,
@@ -26,21 +24,9 @@ function init() {
     return 2*Math.PI*r;
   };
 
-  // var arc = d3.svg.arc()
-  //   .startAngle(0)
-  //   .endAngle(2*Math.PI);
-
-  // var radius = d3.scale.linear()
-  //   .domain([start, end])
-  //   .range([0, d3.min([width,height])/2-20]);
-
-  var radius2 = d3.scale.pow().exponent(0.7)
+  var radius = d3.scale.pow().exponent(0.7)
     .domain([end, start])
     .range([0, d3.min([width,height])/2-20]);
-
-  // var radius3 = d3.scale.log()
-  //   .domain([start, end])
-  //   .range([0, d3.min([width,height])/2-20]);
 
   var angle = d3.scale.linear()
     .domain([0,num_axes])
@@ -57,7 +43,7 @@ function init() {
   var spiral = d3.svg.line.radial()
     .interpolate("cardinal")
     .angle(theta)
-    .radius(radius2);
+    .radius(radius);
 
   var spiralPath = svg.selectAll(".spiral")
       .data([pieces])
@@ -71,8 +57,6 @@ function init() {
 
   var text = svg.append("text")
     .attr("id","textWrap");
-    // .attr("x", 0)
-    // .attr("y", -height/2+16);
 
   var textPaths = [];
   var len = data.length;
@@ -125,89 +109,7 @@ function init() {
 
   }
 
-  // text.append("textPath")
-  //   .attr("id","text2")
-  //   .attr("xlink:href","#path1")
-  //   .text("what what WHHATT IS DISSS")
-  //   .attr("text-anchor", "start")
-  //   .attr("startOffset", 0.7)
-  //   .style({'font-size': '20px'});
-
-  // svg.selectAll("circle.tick")
-  //     .data(d3.range(end,start,(start-end)/4))
-  //   .enter().append("circle")
-  //     .attr("class", "tick")
-  //     .attr("cx", 0)
-  //     .attr("cy", 0)
-  //     .attr("r", function(d) { return radius(d); })
-
-  // svg.selectAll(".axis")
-  //     .data(d3.range(num_axes))
-  //   .enter().append("g")
-  //     .attr("class", "axis")
-  //     .attr("transform", function(d) { return "rotate(" + -angle(d) + ")"; })
-  //   .call(radial_tick)
-  //   .append("text")
-  //     .attr("y", radius(end)+13)
-  //     .text(function(d) { return angle(d) + "°"; })
-  //     .attr("text-anchor", "middle")
-  //     .attr("transform", function(d) { return "rotate(" + -90 + ")" })
-
-  // function radial_tick(selection) {
-  //   selection.each(function(axis_num) {
-  //     d3.svg.axis()
-  //       .scale(radius)
-  //       .ticks(5)
-  //       .tickValues( axis_num == tick_axis ? null : [])
-  //       .orient("bottom")(d3.select(this));
-
-  //     d3.select(this)
-  //       .selectAll("text")
-  //       .attr("text-anchor", "bottom")
-  //       .attr("transform", "rotate(" + angle(axis_num) + ")");
-  //   });
-  // }
-
-  // document.querySelector('#save').addEventListener('click', function() { save(false); }, false);
-  // document.querySelector('#save-highres').addEventListener('click', function() { save(true); }, false);
-
 }
-
-// function save(highRes) {
-
-//   var btn = this;
-//   var getDownload = document.querySelector('#download');
-//   var container = document.querySelector('#chart');
-
-//   btn.innerHTML = 'loading...';
-//   if (highRes) {
-//     $(container).css({'transform': 'scale(2)', 'transform-origin': 'top left'});
-//   }
-
-//   html2canvas(container).then(function(canvas) {
-
-//     imageData = canvas.toDataURL("image/png");
-//     imageData = imageData.replace(/^data:image\/png;base64,/, '');
-
-//     var imageBinaryString = atob(imageData);
-//     var imageBinaryData = new Uint8Array(imageBinaryString.length);
-
-//     for (var i = 0; i < imageBinaryString.length; i++) {
-//       imageBinaryData[i] = imageBinaryString.charCodeAt(i);
-//     }
-
-//     var blob = new Blob([imageBinaryData.buffer],{'type': 'image/png'});
-
-//     getDownload.setAttribute('href', window.URL.createObjectURL(blob));
-//     getDownload.setAttribute('download', 'image.png');
-//     getDownload.style.display = 'block';
-
-//     btn.innerHTML = 'save';
-//     $(container).css({'transform': 'none'});
-
-//   });
-
-// }
 
 try {
   Typekit.load({
