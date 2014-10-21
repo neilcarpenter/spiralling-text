@@ -1,28 +1,26 @@
+var width = 700,
+  height = 700,
+  num_axes = 8,
+  tick_axis = 1,
+  start = 0,
+  end = 8;
+
+var MAX_TEXT_SIZE = 70;
+var MIN_TEXT_SIZE = 15;
+var SPACE = 5;
+
+// http://paletton.com/#uid=1000u0kllllaFw0g0qFqFg0w0aF
+var COLORS = [
+  '#550000',
+  '#801515',
+  '#AA3939',
+  '#D46A6A'
+];
+
+var len = data.length;
+var textPaths = [];
+
 function init() {
-
-  var width = 700,
-      height = 700,
-      num_axes = 8,
-      tick_axis = 1,
-      start = 0,
-      end = 8;
-
-  var MAX_TEXT_SIZE = 70;
-  var MIN_TEXT_SIZE = 15;
-  var SPACE = 5;
-
-  // http://paletton.com/#uid=1000u0kllllaFw0g0qFqFg0w0aF
-  var COLORS = [
-    '#550000',
-    '#801515',
-    '#AA3939',
-    '#D46A6A'
-  ];
-
-  var theta = function(r) {
-    // console.log(r);
-    return 2*Math.PI*r;
-  };
 
   var radius = d3.scale.pow().exponent(0.7)
     .domain([end, start])
@@ -58,9 +56,6 @@ function init() {
   var text = svg.append("text")
     .attr("id","textWrap");
 
-  var textPaths = [];
-  var len = data.length;
-
   var colorFn = randomColor;
 
   data = _.sortBy(data, function(d) { return -d.weight; });
@@ -73,16 +68,16 @@ function init() {
     var space = size / 2;
     space = SPACE;
 
-    var offset, prevNode, prevNodeLen, prevNodeStart;
+    var offset, targetOffset, prevNode, prevNodeLen, prevNodeStart;
 
     if (textPaths.length) {
       prevNode = textPaths[i-1].node();
       prevNodeLen = prevNode.getComputedTextLength();
-      prevNodeStart = parseFloat(prevNode.getAttribute('startOffset'), 10);
+      prevNodeStart = parseFloat(prevNode.dataset.offset, 10);
       // console.log(prevNode, prevNodeLen, prevNodeStart);
-      offset = ((prevNodeLen + space) / spiralPathLength) + prevNodeStart;
+      targetOffset = ((prevNodeLen + space) / spiralPathLength) + prevNodeStart;
     } else {
-      offset = 0;
+      targetOffset = 0;
     }
 
     var textPath = text.append("textPath")
@@ -90,26 +85,75 @@ function init() {
       .attr("xlink:href","#path1")
       .text(d.text.toLowerCase())
       .attr("text-anchor", "start")
-      .attr("startOffset", offset)
-      .style({'font-size': size+'px', 'fill': colorFn(i)});
+      .attr("startOffset", targetOffset-0.01)
+      .attr("data-offset", targetOffset)
+      .attr("data-size", size)
+      .style({'font-size': size+'px', 'fill': colorFn(i), 'opacity': 0});
 
     textPaths.push(textPath);
 
   });
 
-  function randomColor(i) {
+  data.forEach(function(d, i) {
 
-    return COLORS[i % COLORS.length];
+    textPaths[i].style({'font-size': '0px'});
 
-  }
+  });
 
-  function progressiveColor(i) {
-
-    return 'hsla(0, 72%, 29%, ' + (1-(i/len)) + ')';
-
-  }
+  transitionIn();
 
 }
+
+function theta(r) {
+  // console.log(r);
+  return 2*Math.PI*r;
+}
+
+function randomColor(i) {
+
+  return COLORS[i % COLORS.length];
+
+}
+
+function progressiveColor(i) {
+
+  return 'hsla(0, 72%, 29%, ' + (1-(i/len)) + ')';
+
+}
+
+function transitionIn() {
+
+  var totalTime = 3000;
+  var delay = totalTime / data.length;
+
+  textPaths.forEach(function(d, i) {
+
+    console.log(d, i);
+
+    console.log(d.node().dataset.offset);
+
+    d
+      .transition()
+      // .delay(function(d, i) { return i * delay; })
+      .delay(function(d) {
+        // return (d.data.count/max)*totalTime;
+        // return ((d.data.count/max)*totalTime)+(i*delay);
+        return (i*delay);
+        // return ((len-i)*delay);
+        // return Math.random()*totalTime;
+        // return ((i % SEGMENTS) * delay) + (Math.floor(i / SEGMENTS) * (delay * SEGMENTS));
+        // return (i % SEGMENTS) * delay2;
+      })
+      .duration(700)
+      .ease('cubic-in-out')
+      // .ease('quad-out')
+      // .attrTween("startOffset", animateTextOffset);
+      .attr("startOffset", d.node().dataset.offset)
+      .style({'font-size': d.node().dataset.size+'px', 'opacity': 1});
+
+  });
+
+} 
 
 try {
   Typekit.load({
