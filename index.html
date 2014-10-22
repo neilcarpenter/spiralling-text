@@ -2,46 +2,21 @@
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
-    <title>Spiral those</title>
-    <style>
-      body {
-        font-family: "kepler-std-display",serif;
-        margin: 0;
-      }
-      svg {
-        padding: 30px;
-      }
-      .axis path {
-        fill: none;
-        stroke: #999;
-        stroke-dasharray: 2 3;
-      }
-      .axis text {
-        font-size: 13px;
-        stroke: #222;
-      }
-      text.title {
-        /*font-size: 24px;*/
-      }
-      circle.tick { 
-        fill: #f3f3f3;
-        stroke: #999;
-        stroke-dasharray: 2 3;
-      }
-      path.spiral {
-        fill: none;
-        stroke: #ee8d18;
-        /*stroke-width: 3px;*/
-        stroke-width: 0;
-      }
-    </style>
+    <title>Babeil Spireil</title>
+    <meta name="viewport" id="viewport" content="width=730" />
+    <link rel="stylesheet" href="style.css">
     <script src="//use.typekit.net/rte7stv.js"></script>
   </head>
   <body>
+
     <div id="chart"></div>
+    <button id="refresh">more</button>
+
     <script src="d3.v3.js"></script>
+    <script src="jquery.js"></script>
     <script src="underscore.js"></script>
     <script src="data.js"></script>
     <script src="main.js"></script>
+
   </body>
 </html>

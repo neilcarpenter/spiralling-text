@@ -1,0 +1,85 @@
+body {
+  font-family: "kepler-std-display",serif;
+  margin: 0;
+}
+svg {
+  padding: 15px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: block;
+  z-index: 1;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+.axis path {
+  fill: none;
+  stroke: #999;
+  stroke-dasharray: 2 3;
+}
+.axis text {
+  font-size: 13px;
+  stroke: #222;
+}
+text.title {
+  /*font-size: 24px;*/
+}
+circle.tick { 
+  fill: #f3f3f3;
+  stroke: #999;
+  stroke-dasharray: 2 3;
+}
+path.spiral {
+  fill: none;
+  stroke: #ee8d18;
+  /*stroke-width: 3px;*/
+  stroke-width: 0;
+}
+
+#refresh {
+  opacity: 0;
+  visibility: hidden;
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  left: 50%;
+  width: 50px;
+  height: 50px;
+  background: #D46A6A;
+  border-radius: 25px;
+  color: #fff;
+  border: none;
+  font-size: 13px;
+  font-family: "kepler-std-display",serif;
+  cursor: pointer;
+  -webkit-transform: translate(-50%, -50%) scale(0.7) rotate(-20deg);
+  -moz-transform: translate(-50%, -50%) scale(0.7) rotate(-20deg);
+  -ms-transform: translate(-50%, -50%) scale(0.7) rotate(-20deg);
+  -o-transform: translate(-50%, -50%) scale(0.7) rotate(-20deg);
+  transform: translate(-50%, -50%) scale(0.7) rotate(-20deg);
+  -webkit-transition: all 1.3s ease-in-out;
+  -moz-transition: all 1.3s ease-in-out;
+  -o-transition: all 1.3s ease-in-out;
+  transition: all 1.3s ease-in-out;
+  -webkit-transition-timing-function: cubic-bezier(1.000, -0.470, 0.065, 1.345); 
+     -moz-transition-timing-function: cubic-bezier(1.000, -0.470, 0.065, 1.345); 
+       -o-transition-timing-function: cubic-bezier(1.000, -0.470, 0.065, 1.345); 
+          transition-timing-function: cubic-bezier(1.000, -0.470, 0.065, 1.345); /* custom */
+}
+
+#refresh.show {
+  opacity: 1;
+  visibility: visible;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+#refresh:focus {
+  outline: none;
+}
